@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+
+Parameters:
+ EnvType:
+   Description: Environment
+   Type: String
+   AllowedValues:
+    - 'qa'
+    - 'staging'
+    - 'production'
+ S3LambdaARN:
+   Description: Lambda ARN 
+   Type: String
+   Default: arn:aws:lambda:us-west-2:1234567890:function:functionName
+
+ S3BucketName:
+   Description: Target S3 Bucket
+   Type: String
+   Default: testbucket1234
+
+Resources:
+
+  S3CustomResource:
+    Type: Custom::S3CustomResource
+    Properties:
+      ServiceToken: !Ref S3LambdaARN
+      the_bucket: !Ref S3BucketName
+      dirs_to_create:
+      - !Join [ "/", [ !Ref EnvType, client/test/ ] ]
