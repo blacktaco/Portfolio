@@ -60,4 +60,4 @@ def handler(event, context):
         cfnresponse.send(event,
                          context,
                          cfnresponse.FAILED,
-                         response_data) 
+                         respo
